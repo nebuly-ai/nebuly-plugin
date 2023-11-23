@@ -1,0 +1,22 @@
+{
+    "manifest_version": 2,
+    "name": "OpenAI Web Tracker",
+    "version": "1.0",
+    "description": "Track calls made to the chatgpt backend",
+    "permissions": ["webRequest", "webRequestBlocking", "storage", "<all_urls>"],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": true
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://chat.openai.com/*"],
+        "js": ["content.js"]
+      }
+    ],
+    "options_page": "options.html",
+    "icons": {
+      "48": "icon.png"
+    }
+  }
+  
