@@ -1,4 +1,4 @@
-var NebulySdk = require('./sdk/index.js').NebulySdk;
+var NebulySdk = require('@nebuly-ai/javascript').NebulySdk;
 
 // Create a new instance of the SD
 let removeNebulyListeners;

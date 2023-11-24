@@ -1,5 +1,1 @@
-{    
-    "scripts": {
-        "build": "tsc"
-    }
-}
+{"scripts":{"build":"tsc"},"dependencies":{"@nebuly-ai/javascript":"^0.1.1"}}
