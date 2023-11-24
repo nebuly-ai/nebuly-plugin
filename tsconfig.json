@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "module": "ES6",
+      "target": "es2019",
+      "strict": true,
+      "esModuleInterop": true
+    },
+    "include": [
+      "sdk/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+  }
+  
