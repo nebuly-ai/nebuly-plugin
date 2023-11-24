@@ -1,3 +1,35 @@
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+var NebulySdk = require('./sdk/index.js').NebulySdk;
+
+// Create a new instance of the SD
+let removeNebulyListeners;
+
+chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
+    const endUser = result.endUser;
+    const NEBULY_API_KEY = result.NEBULY_API_KEY;
+    const sdk = new NebulySdk(
+        NEBULY_API_KEY,
+        {
+            end_user: endUser,
+        }
+    );
+
+    if (typeof removeNebulyListeners === 'function') {
+        removeNebulyListeners();
+    }
+    // const chatBox = document.getElementsByClassName('text-sm')[0];
+
+    removeNebulyListeners = sdk.observeChat({
+        // chatElement: chatBox,
+        // CSS Selectors to determine the kind of element
+        // the user is interacting with
+        userPromptSelector: '.text-message[data-message-author-role="user"]',
+        responseSelector: '.text-message[data-message-author-role="assistant"]',        
+        inputSelector: '.gizmo textarea'
+    });
+});
+
+},{"./sdk/index.js":2}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NebulySdk = void 0;
@@ -69,3 +101,5 @@ class NebulySdk {
     }
 }
 exports.NebulySdk = NebulySdk;
+
+},{}]},{},[1]);

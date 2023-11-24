@@ -1,4 +1,4 @@
-// import {NebulySDK} from 'sdk/index.js';
+var NebulySdk = require('./sdk/index.js').NebulySdk;
 
 // Create a new instance of the SD
 let removeNebulyListeners;
@@ -6,7 +6,7 @@ let removeNebulyListeners;
 chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
     const endUser = result.endUser;
     const NEBULY_API_KEY = result.NEBULY_API_KEY;
-    const sdk = new window.NebulySdk(
+    const sdk = new NebulySdk(
         NEBULY_API_KEY,
         {
             end_user: endUser,
