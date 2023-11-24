@@ -4,7 +4,8 @@ chrome.webRequest.onCompleted.addListener(
     function(details) {
         console.log("Request completed:", details);
         // Inject the content script
-        if (details.url == "https://chat.openai.com/backend-api/conversation") {
+        if (details.url === "https://chat.openai.com/backend-api/conversation") {
+            console.log(details)
             chrome.tabs.executeScript(details.tabId, {file: 'content.js'});
         }
         console.log(details.url);   
@@ -14,4 +15,3 @@ chrome.webRequest.onCompleted.addListener(
         urls: ["https://chat.openai.com/backend-api/conversation*"]
     }
 );
-  
