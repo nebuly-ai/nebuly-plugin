@@ -29,6 +29,43 @@ chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
     });
 });
 
+function camelToSnakeCase(str) {
+    return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+}
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (sender.id === chrome.runtime.id && request.action && request.message_id) {
+            console.log(request.action);  // logs the action
+            console.log(request.message_id);  // logs the message_id
+
+            chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
+                const endUser = result.endUser;
+                const NEBULY_API_KEY = result.NEBULY_API_KEY;
+                let sdk = new NebulySdk(
+                    NEBULY_API_KEY,
+                    {
+                        end_user: endUser,
+                    }
+                );
+                
+                const messages = Array.from(document.querySelectorAll('.text-message'));
+                const output_message = messages.find(message => message.dataset.messageId === request.message_id);
+                const output_index = messages.indexOf(output_message);
+                const input_message = output_index > 0 ? messages[output_index - 1] : null;
+
+                const output_text = output_message ? output_message.textContent : "";                
+                const input_text = input_message ? input_message.textContent : "";
+
+                let actionInSnakeCase = camelToSnakeCase(request.action);
+                sdk.sendAction({slug: actionInSnakeCase}, {
+                    output: output_text,
+                    input: input_text
+                })
+            });
+        }
+    }
+);
 },{"@nebuly-ai/javascript":2}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -40,7 +77,7 @@ class NebulySdk {
         this.sendAction = (action, metadata) => {
             metadata = Object.assign({ timestamp: new Date(), anonymize: true }, metadata);
             const payload = { action, metadata };
-            console.log(payload)
+            console.log(payload);
             return fetch(`${this.getOptions().baseUrl}/api/v1/events/feedback`, {
                 method: "POST",
                 body: JSON.stringify(payload),
