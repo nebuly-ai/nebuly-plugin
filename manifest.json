@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "OpenAI Web Tracker",
+    "name": "Nebuly ChatGPT Tracker",
     "version": "1.0",
     "description": "Track calls made to the chatgpt backend",
     "permissions": ["webRequest", "webRequestBlocking", "storage", "<all_urls>"],
