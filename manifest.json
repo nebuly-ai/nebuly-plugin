@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Nebuly ChatGPT Tracker",
     "version": "1.0",
-    "description": "Track calls made to the chatgpt backend",
+    "description": "Analyse your ChatGPT conversation on the Nebuly's platform.",
     "permissions": ["webRequest", "webRequestBlocking", "storage", "<all_urls>"],
     "background": {
       "scripts": ["background.js"],
