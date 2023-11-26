@@ -1,5 +1,3 @@
-# Chrome plugin for ChatGPT
-
 ## Installation
 Clone the repository:
 ```bash
