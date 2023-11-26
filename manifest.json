@@ -3,7 +3,7 @@
     "name": "Nebuly ChatGPT Tracker",
     "version": "1.0",
     "description": "Analyse your ChatGPT conversation on the Nebuly's platform.",
-    "permissions": ["webRequest", "webRequestBlocking", "storage", "<all_urls>"],
+    "permissions": ["webRequest", "storage", "<all_urls>"],
     "background": {
       "scripts": ["background.js"],
       "persistent": true
