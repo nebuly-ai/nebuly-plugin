@@ -65,3 +65,45 @@ chrome.runtime.onMessage.addListener(
         }
     }
 );
+
+function findAncestor (el, cls) {
+    while ((el = el.parentElement) && !el.classList.contains(cls));
+    return el;
+}
+
+const observer = new MutationObserver((mutations) => {
+    const buttons = document.querySelectorAll('.flex.ml-auto.gizmo\\:ml-0.gap-1.items-center');
+    buttons.forEach((button) => {
+        // Check if the button already has the event listener
+        if (!button.dataset.listenerAdded) {
+            button.addEventListener('click', (event) => {
+                var superParent = button.parentElement.parentElement;
+                var singleParent = button.parentElement;
+                var copiedText = superParent.innerText;
+                copiedText = copiedText.replace(singleParent.innerText, '')
+                console.log(copiedText);
+
+                chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
+                    const endUser = result.endUser;
+                    const NEBULY_API_KEY = result.NEBULY_API_KEY;
+                    const sdk = new NebulySdk(
+                        NEBULY_API_KEY,
+                        {
+                            end_user: endUser,
+                        }
+                    );
+                    const ancestor = findAncestor(superParent, 'text-message');
+                    if (ancestor) {
+                        sdk.sendAction({slug: "copy_output", text: copiedText}, {
+                            output: ancestor.innerText,
+                        });
+                    }
+                
+                });
+            });
+            // Mark the button as having the event listener
+            button.dataset.listenerAdded = true;
+        }
+    });
+});
+observer.observe(document.body, { childList: true, subtree: true });
