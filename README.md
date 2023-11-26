@@ -13,10 +13,6 @@ Click on the plugin icon and select "Options". Enter your name and the nebuly AP
 ## Usage
 The plugin will automatically detect when you are using ChatGPT and will send your messages to the nebuly API.
 
-## Missing features
-The plugin does not support client side actions yet. This will be added in the future. Every contribution is welcome.
-
-
 ## How to contribute to the plugin
 ### Pre-requisites
 * You need to install browserify: `npm install -g browserify`
