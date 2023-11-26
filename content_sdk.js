@@ -72,6 +72,9 @@ function findAncestor (el, cls) {
 }
 
 const observer = new MutationObserver((mutations) => {
+    // There are two types of copy buttons. The ones located inside messages that only copy parts of themm
+    // like code snippets, and the ones located at the bottom of the chat that copy the whole message.
+    // First le's add the event listener to the first type of buttons.
     const buttons = document.querySelectorAll('.flex.ml-auto.gizmo\\:ml-0.gap-1.items-center');
     buttons.forEach((button) => {
         // Check if the button already has the event listener
@@ -79,9 +82,21 @@ const observer = new MutationObserver((mutations) => {
             button.addEventListener('click', (event) => {
                 var superParent = button.parentElement.parentElement;
                 var singleParent = button.parentElement;
-                var copiedText = superParent.innerText;
-                copiedText = copiedText.replace(singleParent.innerText, '')
-                console.log(copiedText);
+                var possibleChild = superParent.parentElement.querySelector('.text-message');
+                var outputText;
+                var copiedText;
+                if (possibleChild) {
+                    console.log(possibleChild);
+                    copiedText = possibleChild.innerText;
+                    console.log(copiedText);
+                    outputText = possibleChild.innerText;
+                } else {
+                    copiedText = superParent.innerText;
+                    copiedText = copiedText.replace(singleParent.innerText, '')
+                    console.log(copiedText);
+                    const ancestor = findAncestor(superParent, 'text-message');
+                    outputText = ancestor ? ancestor.innerText : null;
+                }
 
                 chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
                     const endUser = result.endUser;
@@ -92,10 +107,9 @@ const observer = new MutationObserver((mutations) => {
                             end_user: endUser,
                         }
                     );
-                    const ancestor = findAncestor(superParent, 'text-message');
-                    if (ancestor) {
+                    if (outputText) {
                         sdk.sendAction({slug: "copy_output", text: copiedText}, {
-                            output: ancestor.innerText,
+                            output: outputText,
                         });
                     }
                 
