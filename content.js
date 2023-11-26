@@ -39,8 +39,8 @@ chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
             }
         })
     
-        console.log(await response.json())
-        console.log(output)
+        // console.log(await response.json())
+        // console.log(output)
     }
     postData();
 });

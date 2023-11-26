@@ -36,8 +36,8 @@ function camelToSnakeCase(str) {
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (sender.id === chrome.runtime.id && request.action && request.message_id) {
-            console.log(request.action);  // logs the action
-            console.log(request.message_id);  // logs the message_id
+            // console.log(request.action);  // logs the action
+            // console.log(request.message_id);  // logs the message_id
 
             chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
                 const endUser = result.endUser;
@@ -87,14 +87,13 @@ const observer = new MutationObserver((mutations) => {
                 var outputText;
                 var copiedText;
                 if (possibleChild) {
-                    console.log(possibleChild);
                     copiedText = possibleChild.innerText;
-                    console.log(copiedText);
+                    // console.log(copiedText);
                     outputText = possibleChild.innerText;
                 } else {
                     copiedText = superParent.innerText;
                     copiedText = copiedText.replace(singleParent.innerText, '')
-                    console.log(copiedText);
+                    // console.log(copiedText);
                     const ancestor = findAncestor(superParent, 'text-message');
                     outputText = ancestor ? ancestor.innerText : null;
                 }
