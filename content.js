@@ -19,7 +19,7 @@ chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
         const input = tuples[tuples.length - 1][0];
         const output = tuples[tuples.length - 1][1];
         const timeEnd = new Date();
-        const response = await fetch("https://dev.backend.nebuly.com/event-ingestion/api/v1/events/interactions", {
+        const response = await fetch("https://backend.nebuly.com/event-ingestion/api/v1/events/interactions", {
             method: "POST",
             body: JSON.stringify({
                 interaction: {
@@ -31,7 +31,7 @@ chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
                     end_user: endUser,
                     model: "gpt-3.5-turbo",
                 },
-                anonymize: false,
+                anonymize: true,
             }),
             headers: {
                 "Content-Type": "application/json",

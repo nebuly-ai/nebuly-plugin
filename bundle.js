@@ -76,7 +76,8 @@ const observer = new MutationObserver((mutations) => {
     // There are two types of copy buttons. The ones located inside messages that only copy parts of themm
     // like code snippets, and the ones located at the bottom of the chat that copy the whole message.
     // First le's add the event listener to the first type of buttons.
-    const buttons = document.querySelectorAll('.flex.ml-auto.gizmo\\:ml-0.gap-1.items-center');
+    const elements = document.querySelectorAll('.flex.items-center.gap-1, .flex.items-center.gap-1\\.5');    
+    const buttons = Array.from(elements).filter(element => element.tagName === 'BUTTON');    
     buttons.forEach((button) => {
         // Check if the button already has the event listener
         if (!button.dataset.listenerAdded) {
@@ -154,8 +155,11 @@ class NebulySdk {
                     input = e.target.textContent;
                 }
                 if (e.target.closest(options.responseSelector)) {
-                    slug = "copy_output";
-                    output = e.target.textContent;
+                    let responseElement = e.target.closest(options.responseSelector);
+                    if (responseElement) {
+                        slug = "copy_output";
+                        output = responseElement.textContent;
+                    }
                 }
                 // The copy event is outside the input or output
                 if (!slug)
