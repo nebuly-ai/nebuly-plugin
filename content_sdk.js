@@ -24,7 +24,7 @@ chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
         // the user is interacting with
         userPromptSelector: '.text-message[data-message-author-role="user"]',
         responseSelector: '.text-message[data-message-author-role="assistant"]',        
-        inputSelector: '.gizmo textarea'
+        inputSelector: 'textarea[id="prompt-textarea"]'
     });
 });
 

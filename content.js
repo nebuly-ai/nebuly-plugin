@@ -11,6 +11,20 @@ chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
             if (elements[i].dataset.messageAuthorRole === "user") {
                 // If the next element exists and its role is "assistant", add a tuple to the array
                 if (i + 1 < elements.length && elements[i + 1].dataset.messageAuthorRole === "assistant") {
+                    // check if the assistant message is already finished
+                    if (i + 1 == elements.length - 1) {
+                        let assistantMessage = elements[i + 1].textContent;
+                        let iteration = 0;
+                        await new Promise(r => setTimeout(r, 1000));
+                        while (assistantMessage !== elements[i + 1].textContent) {
+                            assistantMessage = elements[i + 1].textContent;
+                            await new Promise(r => setTimeout(r, 1000));
+                            if (iteration > 60) {
+                                break;
+                            }
+                            iteration++;
+                        }
+                    }
                     tuples.push([elements[i].textContent, elements[i + 1].textContent]);
                 }
             }
@@ -40,6 +54,7 @@ chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
         })
     
         // console.log(await response.json())
+        // console.log(input)
         // console.log(output)
     }
     postData();
