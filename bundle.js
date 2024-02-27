@@ -84,7 +84,7 @@ const observer = new MutationObserver((mutations) => {
             button.addEventListener('click', (event) => {
                 var superParent = button.parentElement.parentElement;
                 var singleParent = button.parentElement;
-                var possibleChild = superParent.parentElement.querySelector('.text-message');
+                var possibleChild = superParent.parentElement.parentElement.querySelector('.text-message');
                 var outputText;
                 var copiedText;
                 if (possibleChild) {
