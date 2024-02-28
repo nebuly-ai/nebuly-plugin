@@ -15,10 +15,10 @@ chrome.storage.sync.get(['endUser', 'NEBULY_API_KEY'], function(result) {
                     if (i + 1 == elements.length - 1) {
                         let assistantMessage = elements[i + 1].textContent;
                         let iteration = 0;
-                        await new Promise(r => setTimeout(r, 1000));
+                        await new Promise(r => setTimeout(r, 3000));
                         while (assistantMessage !== elements[i + 1].textContent) {
                             assistantMessage = elements[i + 1].textContent;
-                            await new Promise(r => setTimeout(r, 1000));
+                            await new Promise(r => setTimeout(r, 3000));
                             if (iteration > 60) {
                                 break;
                             }
